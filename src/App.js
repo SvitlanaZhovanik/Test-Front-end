@@ -1,12 +1,10 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Container, Row } from 'react-bootstrap';
 import ClockLoader from 'react-spinners/ClockLoader';
 import AppBar from 'components/AppBar';
 import { css } from '@emotion/react';
 import { ToastContainer } from 'react-toastify';
-
-import { useEffect } from 'react';
 
 const ShopsPage = lazy(() =>
   import('./pages/ShopsPage' /* webpackChunkName: "home-page" */),
@@ -19,9 +17,25 @@ const HistoryPage = lazy(() =>
 );
 
 export default function App() {
+  const [count, setCount] = useState(
+    JSON.parse(localStorage.getItem('products'))?.length || null,
+  );
+  const [isClear, setIsClear] = useState(false);
+
+  const handleCount = () => {
+    setIsClear(false);
+    setCount(count + 1);
+  };
+  const handleClearCount = () => {
+    setIsClear(true);
+  };
+  useEffect(() => {
+    if (isClear) setCount(null);
+  }, [isClear]);
+
   return (
     <>
-      <AppBar>
+      <AppBar count={count}>
         <Suspense
           fallback={
             <Container>
@@ -39,8 +53,11 @@ export default function App() {
           }
         >
           <Routes>
-            <Route path="/" element={<ShopsPage />} />
-            <Route path="order" element={<ShopingCartPage />} />
+            <Route path="/" element={<ShopsPage handleCount={handleCount} />} />
+            <Route
+              path="order"
+              element={<ShopingCartPage isClear={handleClearCount} />}
+            />
             <Route path="history" element={<HistoryPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

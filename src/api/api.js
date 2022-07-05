@@ -22,3 +22,13 @@ export const getProductsById = async id => {
     toast.error('Sorry, something went wrong, please try again later ');
   }
 };
+
+export const addOrder = async order => {
+  try {
+    const res = await axios.post(ORDER_ENDPOINT, order);
+    toast.success('Your order has been successfully sent');
+    return res.data.data;
+  } catch (error) {
+    toast.error('Sorry, something went wrong, please try again later ');
+  }
+};

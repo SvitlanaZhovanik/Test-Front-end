@@ -5,7 +5,6 @@ import axios from 'axios';
 import 'modern-normalize/modern-normalize.css';
 import './styles/base.css';
 import 'react-toastify/dist/ReactToastify.css';
-import 'overlayscrollbars/css/OverlayScrollbars.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App';

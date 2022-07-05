@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import { getAllShops, getProductsById } from 'api/api';
 import ShopsList from 'components/ShopsList';
 import ProductsList from 'components/ProductsList';
 import { toast } from 'react-toastify';
 
-export default function ShopsPage() {
+export default function ShopsPage({ handleCount }) {
   const [shops, setShops] = useState([]);
   const [products, setProducts] = useState([]);
   const [id, setId] = useState(localStorage.getItem('id') || null);
@@ -16,6 +16,7 @@ export default function ShopsPage() {
   );
 
   useEffect(() => {
+    setIsLoading(true);
     getAllShops().then(shops => {
       setShops(shops);
       setIsLoading(false);
@@ -34,12 +35,10 @@ export default function ShopsPage() {
         setIsLoading(false);
       });
     }
-  }, [id, order]);
-  useEffect(() => {
     if (order) {
       localStorage.setItem('products', JSON.stringify(order));
     }
-  }, [order]);
+  }, [id, order]);
 
   const handleClick = id => {
     setId(id);
@@ -53,6 +52,7 @@ export default function ShopsPage() {
     });
     if (!order.find(item => item.id === product.id)) {
       setOrder([...order, product]);
+      handleCount();
     }
     setDisabled(true);
     toast.success('Product in Shoping Card');
@@ -62,7 +62,7 @@ export default function ShopsPage() {
     <Container>
       <h1 className="isHidden">Section Shops</h1>
       <Row>
-        <Col md={5} lg={3}>
+        <Col md={5} lg={3} className="shadow-lg">
           <ShopsList
             data={shops}
             handleClick={handleClick}
@@ -71,11 +71,22 @@ export default function ShopsPage() {
           />
         </Col>
         <Col>
-          <ProductsList
-            data={products}
-            loading={isLoading}
-            handleClick={handleProductClick}
-          />
+          <Card
+            style={{
+              height: '40rem',
+              padding: '2rem',
+              overflowY: 'scroll',
+              overflowX: 'hidden',
+              scrollBehavior: 'smooth',
+            }}
+            border="primary"
+          >
+            <ProductsList
+              data={products}
+              loading={isLoading}
+              handleClick={handleProductClick}
+            />
+          </Card>
         </Col>
       </Row>
     </Container>

@@ -1,13 +1,20 @@
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import { Col, Form, Row, Stack } from 'react-bootstrap';
+import { Button, Col, Row, Stack } from 'react-bootstrap';
 import { useSpring, animated } from 'react-spring';
 import FormTextField from './FormTextField';
+import { toast } from 'react-toastify';
 
 const schema = yup.object({
   name: yup.string().required('Required'),
   email: yup.string().email('Invalid email').required('Required'),
-  phone: yup.string().required('Required'),
+  phone: yup
+    .string()
+    .matches(
+      /^[(]?[0]{1}[0-9]{2}[)]?[0-9]{3}-[0-9]{2}-[0-9]{2}$/,
+      'Format (0xx)xxx-xx-xx',
+    )
+    .required('Required'),
   address: yup.string().required('Required'),
 });
 
@@ -21,7 +28,31 @@ export default function ShopingForm({ handleSubmit }) {
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={handleSubmit}
+      validate={values => {
+        let errors = {};
+        if (!values.name) {
+          errors.name = 'Name is required';
+        }
+        if (!values.email) {
+          errors.email = 'Email is required';
+        }
+        if (!values.phone) {
+          errors.phone = 'Phone is required';
+        }
+        if (!values.address) {
+          errors.address = 'Address is required';
+        }
+
+        return errors;
+      }}
+      onSubmit={(values, { resetForm }) => {
+        const normaliseEmail = values.email.toLowerCase();
+        handleSubmit({ ...values, email: normaliseEmail });
+        resetForm();
+        toast.success(
+          'Your details have been successfully added to the order ',
+        );
+      }}
       initialValues={{
         name: '',
         email: '',
@@ -29,8 +60,8 @@ export default function ShopingForm({ handleSubmit }) {
         address: '',
       }}
     >
-      {({ submit, errors, touched }) => (
-        <Form noValidate onSubmit={submit}>
+      {({ handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
           <AnimatedStack gap={3} style={props}>
             <Row>
               <FormTextField
@@ -43,9 +74,6 @@ export default function ShopingForm({ handleSubmit }) {
                 name="name"
                 placeholder="Mark"
               />
-              {touched.name && errors.name && (
-                <Form.Text>{errors.name}</Form.Text>
-              )}
             </Row>
             <Row>
               <FormTextField
@@ -58,9 +86,6 @@ export default function ShopingForm({ handleSubmit }) {
                 name="email"
                 placeholder="example@gmail.com"
               />
-              {touched.email && errors.email && (
-                <Form.Text>{errors.email}</Form.Text>
-              )}
             </Row>
             <Row>
               <FormTextField
@@ -69,13 +94,10 @@ export default function ShopingForm({ handleSubmit }) {
                 xl={10}
                 controlId="Phone"
                 label="Phone"
-                type="phone"
+                type="tel"
                 name="phone"
                 placeholder="(096)234-45-46"
               />
-              {touched.phone && errors.phone && (
-                <Form.Text>{errors.phone}</Form.Text>
-              )}
             </Row>
             <Row>
               <FormTextField
@@ -88,10 +110,10 @@ export default function ShopingForm({ handleSubmit }) {
                 name="address"
                 placeholder="Kyiv, st. Obolonsky 45"
               />
-              {touched.address && errors.address && (
-                <Form.Text>{errors.address}</Form.Text>
-              )}
             </Row>
+            <Col>
+              <Button type="submit">Add your data to order</Button>
+            </Col>
           </AnimatedStack>
         </Form>
       )}
