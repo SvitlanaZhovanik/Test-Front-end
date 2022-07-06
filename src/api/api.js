@@ -32,3 +32,13 @@ export const addOrder = async order => {
     toast.error('Sorry, something went wrong, please try again later ');
   }
 };
+export const getOrdersByValue = async (email, phone) => {
+  try {
+    const res = await axios.get(
+      `${ORDER_ENDPOINT}?email=${email}&phone=${phone}`,
+    );
+    return res.data.data;
+  } catch (error) {
+    toast.error('Sorry, orders not found');
+  }
+};

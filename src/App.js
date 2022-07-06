@@ -22,9 +22,10 @@ export default function App() {
   );
   const [isClear, setIsClear] = useState(false);
 
-  const handleCount = () => {
+  const handleCount = action => {
     setIsClear(false);
-    setCount(count + 1);
+    if (action === 'increment') setCount(count + 1);
+    if (action === 'decrement') setCount(count - 1);
   };
   const handleClearCount = () => {
     setIsClear(true);
@@ -56,7 +57,12 @@ export default function App() {
             <Route path="/" element={<ShopsPage handleCount={handleCount} />} />
             <Route
               path="order"
-              element={<ShopingCartPage isClear={handleClearCount} />}
+              element={
+                <ShopingCartPage
+                  handleClear={handleClearCount}
+                  handleCount={handleCount}
+                />
+              }
             />
             <Route path="history" element={<HistoryPage />} />
             <Route path="*" element={<Navigate to="/" />} />

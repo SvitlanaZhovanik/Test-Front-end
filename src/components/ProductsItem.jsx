@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Card,
   Button,
@@ -103,3 +104,16 @@ export default function ProductsItem({
     </Col>
   );
 }
+ProductsItem.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  contry: PropTypes.string,
+  isVegan: PropTypes.bool,
+  calorieCount: PropTypes.number,
+  ingredients: PropTypes.string,
+  price: PropTypes.string,
+  image: PropTypes.string,
+  loading: PropTypes.bool,
+  handleClick: PropTypes.func,
+};

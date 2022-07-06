@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Navbar, Container, Nav, Badge } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -32,3 +33,8 @@ export default function AppBar({ count, children }) {
     </main>
   );
 }
+
+AppBar.propTypes = {
+  count: PropTypes.number,
+  children: PropTypes.any.isRequired,
+};

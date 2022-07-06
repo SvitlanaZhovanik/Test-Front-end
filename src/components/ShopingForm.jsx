@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { Button, Col, Row, Stack } from 'react-bootstrap';
@@ -120,3 +121,6 @@ export default function ShopingForm({ handleSubmit }) {
     </Formik>
   );
 }
+ShopingForm.propTypes = {
+  handleSubmit: PropTypes.func,
+};

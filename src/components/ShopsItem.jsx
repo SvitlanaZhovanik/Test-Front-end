@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { ListGroup, Card, Placeholder } from 'react-bootstrap';
 
 export default function ShopsItem({
@@ -40,3 +41,11 @@ export default function ShopsItem({
     </ListGroup.Item>
   );
 }
+ShopsItem.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool,
+  handleClick: PropTypes.func,
+};

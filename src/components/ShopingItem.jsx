@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import {
   Card,
@@ -6,6 +7,7 @@ import {
   Spinner,
   Placeholder,
   Container,
+  CloseButton,
 } from 'react-bootstrap';
 
 export default function ShopingItem({
@@ -18,6 +20,7 @@ export default function ShopingItem({
   idx,
   handleAmountChange,
   isLoading,
+  handleDelete,
 }) {
   const [value, setValue] = useState(amount);
 
@@ -25,12 +28,15 @@ export default function ShopingItem({
     setValue(e.target.value);
     handleAmountChange(e.target.value, idx);
   };
+  const handleClick = () => {
+    console.log(id);
+    handleDelete(id);
+  };
   return (
     <>
       {isLoading ? (
         <Stack
           direction="horizontal"
-          key={id}
           className="w-100 h-40 mb-3 ms-3 border border-secondary"
         >
           <Container
@@ -67,8 +73,7 @@ export default function ShopingItem({
       ) : (
         <Stack
           direction="horizontal"
-          key={id}
-          className="w-100 h-40 mb-3 ms-3 border border-secondary"
+          className="w-100 h-40 mb-3 ms-3 border border-secondary position-relative"
         >
           <Card.Img
             style={{
@@ -96,9 +101,27 @@ export default function ShopingItem({
               onChange={handleChange}
               style={{ width: '5rem' }}
             />
+            <CloseButton
+              className="position-absolute top-0 end-0"
+              aria-label="Hide"
+              onClick={handleClick}
+            />
           </Card.Body>
         </Stack>
       )}
     </>
   );
 }
+
+ShopingItem.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  price: PropTypes.string,
+  image: PropTypes.string,
+  isLoading: PropTypes.bool,
+  handleAmountChange: PropTypes.func,
+  amount: PropTypes.number,
+  idx: PropTypes.number,
+  handleDelete: PropTypes.func,
+};

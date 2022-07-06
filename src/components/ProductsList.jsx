@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { CardGroup, Row } from 'react-bootstrap';
 import ProductsItem from './ProductsItem';
 
@@ -39,3 +40,9 @@ export default function ProductsList({ data, loading, handleClick }) {
     </CardGroup>
   );
 }
+
+ProductsList.propTypes = {
+  data: PropTypes.array,
+  loading: PropTypes.bool,
+  handleClick: PropTypes.func,
+};

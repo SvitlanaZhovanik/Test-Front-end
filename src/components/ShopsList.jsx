@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { ListGroup } from 'react-bootstrap';
 import ShopsItem from './ShopsItem';
 
@@ -20,3 +21,9 @@ export default function ShopsList({ data, handleClick, loading, disabled }) {
     </ListGroup>
   );
 }
+ShopsList.propTypes = {
+  data: PropTypes.array,
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool,
+  handleClick: PropTypes.func,
+};

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { getAllShops, getProductsById } from 'api/api';
 import ShopsList from 'components/ShopsList';
@@ -21,6 +22,7 @@ export default function ShopsPage({ handleCount }) {
       setShops(shops);
       setIsLoading(false);
     });
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export default function ShopsPage({ handleCount }) {
     if (order) {
       localStorage.setItem('products', JSON.stringify(order));
     }
+    return () => {};
   }, [id, order]);
 
   const handleClick = id => {
@@ -52,7 +55,7 @@ export default function ShopsPage({ handleCount }) {
     });
     if (!order.find(item => item.id === product.id)) {
       setOrder([...order, product]);
-      handleCount();
+      handleCount('increment');
     }
     setDisabled(true);
     toast.success('Product in Shoping Card');
@@ -92,3 +95,7 @@ export default function ShopsPage({ handleCount }) {
     </Container>
   );
 }
+
+ShopsPage.propTypes = {
+  handleCount: PropTypes.func,
+};

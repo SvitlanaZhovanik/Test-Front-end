@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Col, Row, Container, Card, Button } from 'react-bootstrap';
 import ShopingForm from 'components/ShopingForm';
 import ShopingList from 'components/ShopingList';
 import { addOrder } from 'api/api';
 
-export default function ShopingCartPage({ isClear }) {
+export default function ShopingCartPage({ handleClear, handleCount }) {
   const [products, setProducts] = useState(
     JSON.parse(localStorage.getItem('products')) || [],
   );
@@ -24,7 +25,14 @@ export default function ShopingCartPage({ isClear }) {
   const handleUserDataSubmit = value => {
     setUserData(value);
   };
-
+  const handleDelete = id => {
+    const newProducts = products.filter(item => {
+      return item.id !== id;
+    });
+    setProducts([...newProducts]);
+    localStorage.setItem('products', JSON.stringify(newProducts));
+    handleCount('decrement');
+  };
   const handleAmountChange = (value, idx) => {
     products[idx].amount = Number(value);
     setProducts([...products]);
@@ -38,7 +46,7 @@ export default function ShopingCartPage({ isClear }) {
         setUserData({});
         setProducts([]);
         localStorage.clear();
-        isClear();
+        handleClear();
       }
     });
     setIsLoading(true);
@@ -64,6 +72,7 @@ export default function ShopingCartPage({ isClear }) {
               data={products}
               handleAmountChange={handleAmountChange}
               isLoading={isLoading}
+              handleDelete={handleDelete}
             />
           </Card>
         </Col>
@@ -85,3 +94,7 @@ export default function ShopingCartPage({ isClear }) {
     </Container>
   );
 }
+ShopingCartPage.propTypes = {
+  handleClear: PropTypes.func,
+  handleCount: PropTypes.func,
+};

@@ -1,7 +1,14 @@
+import PropTypes from 'prop-types';
 import { CardGroup, Row } from 'react-bootstrap';
 import ShopingItem from './ShopingItem';
 
-export default function ShopingList({ data, handleAmountChange, isLoading }) {
+export default function ShopingList({
+  data,
+  handleAmountChange,
+  isLoading,
+  handleDelete,
+}) {
+  console.log(data);
   return (
     <CardGroup className="w-100">
       <Row className="w-100">
@@ -9,6 +16,7 @@ export default function ShopingList({ data, handleAmountChange, isLoading }) {
           return (
             <ShopingItem
               key={id}
+              id={id}
               name={name}
               description={description}
               image={image}
@@ -17,6 +25,7 @@ export default function ShopingList({ data, handleAmountChange, isLoading }) {
               handleAmountChange={handleAmountChange}
               idx={idx}
               isLoading={isLoading}
+              handleDelete={handleDelete}
             />
           );
         })}
@@ -24,3 +33,9 @@ export default function ShopingList({ data, handleAmountChange, isLoading }) {
     </CardGroup>
   );
 }
+ShopingList.propTypes = {
+  data: PropTypes.array,
+  isLoading: PropTypes.bool,
+  handleAmountChange: PropTypes.func,
+  handleDelete: PropTypes.func,
+};
