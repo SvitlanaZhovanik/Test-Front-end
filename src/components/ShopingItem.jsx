@@ -29,7 +29,6 @@ export default function ShopingItem({
     handleAmountChange(e.target.value, idx);
   };
   const handleClick = () => {
-    console.log(id);
     handleDelete(id);
   };
   return (

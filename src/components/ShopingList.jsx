@@ -8,7 +8,6 @@ export default function ShopingList({
   isLoading,
   handleDelete,
 }) {
-  console.log(data);
   return (
     <CardGroup className="w-100">
       <Row className="w-100">

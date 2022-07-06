@@ -1,0 +1,3 @@
+The delivery app is written with React 17, Bootstrap and Formik. The Back-end is
+written in Node.js and MongoDB. To check orders on the history page, you can
+enter mail - cat@i.ua
