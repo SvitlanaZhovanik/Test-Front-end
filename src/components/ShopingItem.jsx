@@ -8,6 +8,8 @@ import {
   Placeholder,
   Container,
   CloseButton,
+  Row,
+  Col,
 } from 'react-bootstrap';
 
 export default function ShopingItem({
@@ -72,40 +74,39 @@ export default function ShopingItem({
       ) : (
         <Stack
           direction="horizontal"
-          className="w-100 h-40 mb-3 ms-3 border border-secondary position-relative"
+          className="w-100 h-40 mb-lg-3 ms-lg-3 p-0 border border-secondary position-relative"
         >
-          <Card.Img
-            style={{
-              width: '200px',
-              height: '200px',
-              objectFit: 'containe',
-            }}
-            src={image}
-            alt={`Foto ${name}`}
-          />
-
-          <Card.Body
-            style={{
-              width: '20rem',
-            }}
-          >
-            <Card.Title>{name}</Card.Title>
-
-            <Card.Text>{description}</Card.Text>
-            <Card.Text>Price: {price} ₴</Card.Text>
-            <FormControl
-              type="number"
-              min={1}
-              value={value}
-              onChange={handleChange}
-              style={{ width: '5rem' }}
+          <Row>
+            <Card.Img
+              style={{
+                width: '250px',
+                height: '200px',
+                objectFit: 'containe',
+              }}
+              src={image}
+              alt={`Foto ${name}`}
             />
-            <CloseButton
-              className="position-absolute top-0 end-0"
-              aria-label="Hide"
-              onClick={handleClick}
-            />
-          </Card.Body>
+            <Col>
+              <Card.Body>
+                <Card.Title>{name}</Card.Title>
+
+                <Card.Text>{description}</Card.Text>
+                <Card.Text>Price: {price} ₴</Card.Text>
+                <FormControl
+                  type="number"
+                  min={1}
+                  value={value}
+                  onChange={handleChange}
+                  style={{ width: '5rem' }}
+                />
+                <CloseButton
+                  className="position-absolute top-0 end-0"
+                  aria-label="Hide"
+                  onClick={handleClick}
+                />
+              </Card.Body>
+            </Col>
+          </Row>
         </Stack>
       )}
     </>
