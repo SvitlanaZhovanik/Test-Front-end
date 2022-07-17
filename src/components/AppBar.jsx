@@ -17,7 +17,7 @@ export default function AppBar({ count, children }) {
                 <div className="vr" />
                 <LinkContainer to="order">
                   <Nav.Link>
-                    Shoping Card <Badge bg="dark">{count}</Badge>
+                    Shoping Cart <Badge bg="dark">{count}</Badge>
                   </Nav.Link>
                 </LinkContainer>
                 <div className="vr" />

@@ -95,7 +95,7 @@ export default function ShopingForm({ handleSubmit }) {
                 xl={10}
                 controlId="Phone"
                 label="Phone"
-                type="tel"
+                type="text"
                 name="phone"
                 placeholder="(096)234-45-46"
               />
